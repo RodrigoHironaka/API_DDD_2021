@@ -42,13 +42,15 @@ namespace WebAPI.Controllers
             var resultado = await _IAplicacaoUsuario.ExisteUsuario(login.email, login.senha);
             if (resultado)
             {
+                var idUsuario = await _IAplicacaoUsuario.RetornaIdUsuario(login.email);
+
                 //dados da empresa
                 var token = new TokenJWTBuilder()
                     .AddSecurityKey(JwtSecurityKey.Create("Secret_Key_12345678"))
                     .AddSubject("Empresa Teste")
                     .AddIssuer("Teste.Security.Bearer")
                     .AddAudience("Teste.Security.Bearer")
-                    .AddClaim("UsuarioAPINumero", "1")
+                    .AddClaim("idUsuario", idUsuario)
                     .AddExpiry(5) //minutos
                     .Builder();
 
@@ -86,13 +88,15 @@ namespace WebAPI.Controllers
             var resultado = await _signInManager.PasswordSignInAsync(login.email, login.senha, false, lockoutOnFailure: false);
             if (resultado.Succeeded)
             {
+                var idUsuario = await _IAplicacaoUsuario.RetornaIdUsuario(login.email);
+
                 //dados da empresa
                 var token = new TokenJWTBuilder()
                     .AddSecurityKey(JwtSecurityKey.Create("Secret_Key_12345678"))
                     .AddSubject("Empresa Teste")
-                    .AddIssuer("Teste.Security.Bearer")
-                    .AddAudience("Teste.Security.Bearer")
-                    .AddClaim("UsuarioAPINumero", "1")
+                    .AddIssuer("Teste.Securiry.Bearer")
+                    .AddAudience("Teste.Securiry.Bearer")
+                    .AddClaim("idUsuario", idUsuario)
                     .AddExpiry(5) //minutos
                     .Builder();
 
@@ -115,13 +119,14 @@ namespace WebAPI.Controllers
                 UserName = login.email,
                 Email = login.email,
                 Celular = login.celular,
-                Tipo = TipoUsuario.Comum
+                Tipo = TipoUsuario.Comum,
             };
 
             var resultado = await _userManager.CreateAsync(user, login.senha);
 
             if (resultado.Errors.Any())
                 return Ok(resultado.Errors);
+
             //Geração de confirmação case precise
             var usurarioId = await _userManager.GetUserIdAsync(user);
             var codigo = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -130,7 +135,7 @@ namespace WebAPI.Controllers
             //Retorno email
             codigo = Encoding.UTF8.GetString(WebEncoders.Base64UrlDecode(codigo));
             var resultado2 = await _userManager.ConfirmEmailAsync(user, codigo);
-            var StatusMessage = resultado2.Succeeded;
+            //var StatusMessage = resultado2.Succeeded;
 
             if(resultado2.Succeeded)
                 return Ok("Usuário adicionado com sucesso");

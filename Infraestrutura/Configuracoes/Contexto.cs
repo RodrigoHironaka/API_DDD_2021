@@ -35,7 +35,8 @@ namespace Infraestrutura.Configuracoes
 
         public string ObterStringConexao()
         {
-            string strCon = "Data Source=DESKTOP-NVU34N7\\SQLEXPRESS;Initial Catalog=AULA_API_DDD_2021; Integrated Security=False; User ID=sa;Password=123456;Connect Timeout=15; Encrypt=False;TrustServerCertificate=False";
+            //string strCon = "Data Source=DESKTOP-NVU34N7\\SQLEXPRESS;Initial Catalog=AULA_API_DDD_2021; Integrated Security=False; User ID=sa;Password=123456;Connect Timeout=15; Encrypt=False;TrustServerCertificate=False";
+            string strCon = "Data Source=DESKTOP-RT25TKH\\SQLEXPRESS;Initial Catalog=AULA_API_DDD_2021; Integrated Security=False; User ID=sa;Password=123456;Connect Timeout=15; Encrypt=False;TrustServerCertificate=False";
             return strCon;
         }
 

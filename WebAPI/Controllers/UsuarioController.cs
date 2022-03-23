@@ -46,7 +46,7 @@ namespace WebAPI.Controllers
 
                 //dados da empresa
                 var token = new TokenJWTBuilder()
-                    .AddSecurityKey(JwtSecurityKey.Create("Secret_Key_12345678"))
+                    .AddSecurityKey(JwtSecurityKey.Create("Secret_Key-12345678"))
                     .AddSubject("Empresa Teste")
                     .AddIssuer("Teste.Security.Bearer")
                     .AddAudience("Teste.Security.Bearer")

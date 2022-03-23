@@ -79,7 +79,6 @@ namespace WebAPI.Controllers
             return noticiaNova;
         }
 
-
         private async Task<string> RetornarIdUsuarioLogado()
         {
             if(User != null)
